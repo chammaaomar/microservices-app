@@ -21,7 +21,7 @@ function createQueries({ db }) {
 					:globalPosition::text::jsonb
 				)
 			WHERE
-				page_name='HOME' AND
+				page_name='home' AND
 				(page_data ->> 'lastViewProcessed')::int < :globalPosition
 		`
 

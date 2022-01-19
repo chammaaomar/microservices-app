@@ -1,8 +1,6 @@
 const Bluebird = require('bluebird');
 const { v4: uuidv4 } = require('uuid');
 
-const category = require('./category');
-
 function configureCreateSubscription({ read, readLastMessage, write }) {
 	return ({
 		streamName,

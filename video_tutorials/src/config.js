@@ -32,7 +32,7 @@ function createConfig({ env }) {
 	]
 
 	return {
-		db,
+		db: knexClient,
 		homeApp,
 		recordViewingsApp,
 		homePageAggregator,

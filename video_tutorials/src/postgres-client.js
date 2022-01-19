@@ -18,7 +18,7 @@ function createDatabase({ connectionString }) {
 
 	function query(sql, values = []) {
 		return connect()
-			.query(client => client.query(sql, values));
+			.then(client => client.query(sql, values));
 	}
 	
 	return {
