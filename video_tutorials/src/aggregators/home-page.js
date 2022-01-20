@@ -1,3 +1,10 @@
+/**
+ * Creates the handlers for the home page aggregator. Currently only handles the videoViewed event.
+ * To add more events add, add a key with the message type to be handled. The values have to be
+ * idempotent functions with the following signature: Object => *  
+ * @param {Object} param0.queries object with idempotent handlers 
+ * @returns {Object}
+ */
 function createHandlers({ queries }) {
 	return {
 		videoViewed: event => queries.incrementVideosWatched(event.globalPosition),
@@ -45,7 +52,8 @@ function createQueries({ db }) {
 	}
 
 	/**
-	 * Creates the row in View Data 'pages' table if it doesn't already exist 
+	 * Creates the 'home' row in View Data 'pages' table if it doesn't already exist.
+	 * The row has the state necessary to render the home page
 	 * @returns {PromiseLike<Object>}
 	 */
 	function ensureHomePageExists() {
