@@ -1,5 +1,6 @@
 const deserializeMssage = require('./deserialize-message');
 
+// user-defined functions in message-db (postgresql)
 const getLastMessageSql = 'SELECT * FROM get_last_stream_message($1)';
 const getStreamMessagesSql = 'SELECT * FROM get_stream_messages($1, $2, $3)';
 const getCategoryMessagesSql = 'SELECT * FROM get_category_messages($1, $2, $3)';

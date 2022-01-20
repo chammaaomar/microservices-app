@@ -7,7 +7,14 @@ const createMessageStore = require('./message-store');
 
 const createHomePageAggregator = require('./aggregators/home-page');
 
-
+/**
+ * This function wirtes up all the pieces of our architecture:
+ * Connects apps to the message store
+ * Connects the message store to components and aggregators
+ * Connects aggregators to the View Data 
+ * @param {Object} param0.env Environment variables 
+ * @returns {Object}
+ */
 function createConfig({ env }) {
 
 	// knexClient is a promise that resolves with a db client, i.e. knexClient.then(client => ...)
