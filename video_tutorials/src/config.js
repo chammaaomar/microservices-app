@@ -8,10 +8,10 @@ const createMessageStore = require('./message-store');
 const createHomePageAggregator = require('./aggregators/home-page');
 
 /**
- * This function wirtes up all the pieces of our architecture:
- * Connects apps to the message store
- * Connects the message store to components and aggregators
- * Connects aggregators to the View Data 
+ * This function wires up all the pieces of our architecture:
+ * - Connects apps to the message store
+ * - Connects the message store to components and aggregators
+ * - Connects aggregators to the View Data 
  * @param {Object} param0.env Environment variables 
  * @returns {Object}
  */

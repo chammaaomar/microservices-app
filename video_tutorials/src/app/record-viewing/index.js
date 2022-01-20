@@ -42,6 +42,8 @@ function createRecordViewings({ messageStore }) {
 	const handlers = createHandlers({ actions });
 	const router = express.Router();
 
+	// router.route allows you to chain post, put, get ... etc handlers
+	// instead of doing router.post, router.get ... etc separately
 	router.route('/:videoId').post(handlers.handleRecordViewing);
 
 	return { actions, handlers, router };

@@ -16,7 +16,8 @@ function createHandlers({ queries }) {
 }
 
 function createQueries({ db }) {
-
+	// the view data postgresql db is optimized for reading
+	// just read a single row to construct the home page, no JOINs necessary
 	function loadHomePage() {
 		return db.then(
 			client => client('pages')

@@ -4,8 +4,24 @@ function createHandlers({ queries }) {
 	};
 }
 
+/**
+ * Queries are used by aggregators to aggregate the state transitions in the message store
+ * into a useful state for users. Here for example, the videosWatched integer is used in the pug
+ * template to render how many videos have been watched
+ * @param {PromiseLike<{ raw: (string, Object) => PromiseLike<Object> }} param0.db a promise which resolves
+ * with an object which satisfies the specified interface
+ * @returns {PromiseLike<Object>}
+ */
 function createQueries({ db }) {
 
+	/**
+	 * Increments the 'videosWatched' count. Idempotent. If message's global position
+	 * is less than the lastViewProcessed stored in the 'pages' View Data table,
+	 * that means it's already been processed and shouldn't be processed again
+	 * @param {number} globalPosition global position of message in message store
+	 * used for idempotence. Super important since we can't guarantee exactly-once delivery
+	 * @returns {PromiseLike<Object>}
+	 */
 	function incrementVideosWatched(globalPosition) {
 		const queryString = `
 			UPDATE
@@ -28,6 +44,10 @@ function createQueries({ db }) {
 		return db.then(client => client.raw(queryString, { globalPosition }));
 	}
 
+	/**
+	 * Creates the row in View Data 'pages' table if it doesn't already exist 
+	 * @returns {PromiseLike<Object>}
+	 */
 	function ensureHomePageExists() {
 		const initialData = {
 			pageData: { lastViewProcessed: 0, videosWatched: 0 }
