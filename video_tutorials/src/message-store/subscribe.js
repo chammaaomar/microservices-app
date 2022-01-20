@@ -3,8 +3,11 @@ const { v4: uuidv4 } = require('uuid');
 
 function configureCreateSubscription({ read, readLastMessage, write }) {
 	return ({
+		// streamName to poll for messages
 		streamName,
+		// CRUCIAL: IDEMPOTENT HANDLERS
 		handlers,
+		// globally unique since it defines a subscriber position stream
 		subscriberId,
 		// maximum number of messages to fetch from stream in one batch
 		messagesPerTick = 100,
