@@ -1,3 +1,4 @@
+// This module encapsulates reading the environment variables
 const colors = require('colors/safe');
 const dotenv = require('dotenv');
 

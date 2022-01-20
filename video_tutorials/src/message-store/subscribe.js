@@ -1,19 +1,30 @@
+// Interesting concepts used: dependency injection, first-class functions, closures
+// should be fun for unit testing
 const Bluebird = require('bluebird');
 const { v4: uuidv4 } = require('uuid');
 
+/**
+ * Returns a function to create a subscription of a component or an aggregator to a stream
+ * in the Eventide message store.
+ * @param {(streamName: string, readFrom: int, messages: int) => PromiseLike<Object[]> } param0.read
+ * @param {(streamName: string) => PromiseLike<Object> } param0.readLastMessage
+ * @param {(streamName: string, event: Object, expectedVersion: int) => Object} param0.write 
+ * @returns 
+ */
 function configureCreateSubscription({ read, readLastMessage, write }) {
 	return ({
 		// streamName to poll for messages
 		streamName,
-		// CRUCIAL: IDEMPOTENT HANDLERS
+		// object containing IDEMPOTENT event handlers, since we can't guarnatee exactly-once delivery
+		// signature: { eventType: (event) => * }
 		handlers,
 		// globally unique since it defines a subscriber position stream
 		subscriberId,
 		// maximum number of messages to fetch from stream in one batch
 		messagesPerTick = 100,
-		// messages processed before committing position to position stream
+		// number of messages processed before committing position to position stream
 		positionUpdateInterval = 100,
-		// how frequently to poll
+		// how frequently to poll, the more frequent, the closer to real-time
 		tickIntervalMs = 100
 	}) => {
 		// a single component may subscribe to multiple streams, and thus needs a globally

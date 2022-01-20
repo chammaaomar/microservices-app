@@ -14,6 +14,8 @@ function createConfig({ env }) {
 	const knexClient = createKnexClient({
 		connectionString: env.databaseUrl,
 	})
+
+	// lower level postgres client for interfacing with the message store
 	const postgresClient = createPostgresClient({
 		connectionString: env.messageStoreConnectionString,
 	});
@@ -23,10 +25,15 @@ function createConfig({ env }) {
 
 	const homePageAggregator = createHomePageAggregator({ db: knexClient, messageStore });
 
+	// aggregators or projectors take the state transitions data from the message store (the audit trail)
+	// and project it into useful shapes for the View Data rendered to the user
+	// View Data in our case is also a postgres db
 	const aggregators = [
 		homePageAggregator,
 	]
 
+	// in this architecture, components receive async commands from the message store and carry
+	// out business functionality
 	const components = [
 		
 	]
