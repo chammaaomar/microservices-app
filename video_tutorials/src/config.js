@@ -1,6 +1,7 @@
 const createKnexClient = require('./knex-client');
 const createHomeApp = require('./app/home');
 const createRecordViewingsApp = require('./app/record-viewing');
+const createRegisterUsersApp = require('./app/register-users');
 
 const createPostgresClient = require('./postgres-client');
 const createMessageStore = require('./message-store');
@@ -18,6 +19,8 @@ const createHomePageAggregator = require('./aggregators/home-page');
 function createConfig({ env }) {
 
 	// knexClient is a promise that resolves with a db client, i.e. knexClient.then(client => ...)
+	// this represents the View Data, the eventually consistent state constructed by aggregators
+	// out of the state transitions log in the message store
 	const knexClient = createKnexClient({
 		connectionString: env.databaseUrl,
 	})
@@ -26,9 +29,11 @@ function createConfig({ env }) {
 	const postgresClient = createPostgresClient({
 		connectionString: env.messageStoreConnectionString,
 	});
+
 	const messageStore = createMessageStore({ db: postgresClient });
 	const homeApp = createHomeApp({ db: knexClient });
 	const recordViewingsApp = createRecordViewingsApp({ messageStore });
+	const registerUsersApp = createRegisterUsersApp({ db: knexClient, messageStore });
 
 	const homePageAggregator = createHomePageAggregator({ db: knexClient, messageStore });
 
@@ -49,6 +54,7 @@ function createConfig({ env }) {
 		db: knexClient,
 		homeApp,
 		recordViewingsApp,
+		registerUsersApp,
 		homePageAggregator,
 		aggregators,
 		components,
