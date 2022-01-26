@@ -5,7 +5,7 @@ const createWrite = require('./write');
 const configureCreateSubscription = require('./subscribe');
 
 function createMessageStore({ db }) {
-	const { read, readLastMessage } = createRead({ db });
+	const { read, readLastMessage, fetch } = createRead({ db });
 	const write = createWrite({ db });
 	const createSubscription = configureCreateSubscription({ read, readLastMessage, write });
 
@@ -14,6 +14,7 @@ function createMessageStore({ db }) {
 		createSubscription,
 		read,
 		readLastMessage,
+		fetch,
 	};
 }
 

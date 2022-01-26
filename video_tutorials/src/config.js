@@ -9,6 +9,8 @@ const createMessageStore = require('./message-store');
 const createHomePageAggregator = require('./aggregators/home-page');
 const createUserCredentialsAggregator = require('./aggregators/user-credentials');
 
+const createIdentityComponent = require('./components/identity');
+
 /**
  * This function wires up all the pieces of our architecture:
  * - Connects apps to the message store
@@ -39,6 +41,8 @@ function createConfig({ env }) {
 	const homePageAggregator = createHomePageAggregator({ db: knexClient, messageStore });
 	const userCredentialsAggregator = createUserCredentialsAggregator({ db: knexClient, messageStore });
 
+	const identityComponent = createIdentityComponent({ messageStore });
+
 	// aggregators or projectors take the state transitions data from the message store (the audit trail)
 	// and project it into useful shapes for the View Data rendered to the user
 	// View Data in our case is also a postgres db
@@ -50,7 +54,7 @@ function createConfig({ env }) {
 	// in this architecture, components receive async commands from the message store and carry
 	// out business functionality
 	const components = [
-		
+		identityComponent,
 	]
 
 	return {
