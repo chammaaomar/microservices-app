@@ -1,14 +1,14 @@
 const { v4: uuidv4 } = require('uuid');
 const loadRegisterState = require('./load-register-state');
 
-function createHandlers({ mesasgeStore }) {
+function createHandlers({ messageStore }) {
 
 	function handleRegister(command) {
 
 		const userIdentityStream = `identity-${command.data.userId}`;
 
 		// reconstruct user state based on all 'identity'-category events for the given user
-		const { isRegistered } = mesasgeStore.fetch(userIdentityStream, loadRegisterState);
+		const { isRegistered } = messageStore.fetch(userIdentityStream, loadRegisterState);
 		
 		// idempotence
 		if (isRegistered) {
