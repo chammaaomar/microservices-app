@@ -1,5 +1,13 @@
 # Identity
 
+## Stream Categories
+
+|         |                    |
+| ------- | ------------------ |
+| entity  | `identity`         |
+| command | `identity:command` |
+
+
 ## Commands
 
 ### Register
