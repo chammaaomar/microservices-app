@@ -6,7 +6,7 @@ function hashPassword(context) {
 
 	return bcrypt.hash(password, SALT_ROUNDS)
 		.then(passwordHash => {
-			context.attributes.passwordHash = passwordHash;
+			context.passwordHash = passwordHash;
 			return context;
 		})
 }

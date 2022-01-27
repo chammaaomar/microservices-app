@@ -6,8 +6,8 @@ function writeRegisterCommand(context) {
 		attributes: {
 			id: userId,
 			email,
-			passwordHash,
-		}
+		},
+		passwordHash,
 	} = context;
 
 	const identityCommandStream = `identity:command-${userId}`;
