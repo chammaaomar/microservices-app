@@ -11,11 +11,17 @@ The various ingredients of this implementation of the microservice architecture 
 Stateless handlers of user requests. These emit events and commands to the message store.
 ### Message Store
 A durable, persistent database, laid out as a collection of append-only streams, each owned (can be exclusively appended to) by a component. This is the source of truth on all events in the system, and these events source state. So in case of loss of state in the View Data (discussed below), state can be completely reconstructed from the events in the Message Store. This is structured as append-only streams, so it's optimized for writing.
+
+What do we get by persisting state transitions instead of just persisting state? We get a lot of darn flexibility. Consider
+the following: instead of just persisting the total number of views a video has gotten, we can persist each event of the video
+being viewed, `VideoViewed` events. This means that we can capture these events and run them through a fraud detection
+algorithm. We can create an analytics component that creators can use to view trends ... _etc_. We get much flexibility by
+thinking of "Video Viewing" as a distinct business concern in our system.
 ### Components
 These are the autonomous _idempotent_ doers of things in the system. They get commands to do things from the message stream,
 and upon completing the command successfully or unsuccessfully, they write an event to the message stream(s) they own. They
 are autonomous as they don't need to reach out to other components to do their job, and idempotent as we can't guarantee
-exactly-once delivery of messages.
+exactly-once delivery of commands.
 ### Aggregators
 The message stream doesn't contain user-friendly state. Instead, it contains logs of events. These events represent state transitions or state diffs, and are a log of everything that's happened in our system. Aggregators aggregate or shape these logs of state transitions into various user-friendly states. For example, if the events in the message store are 'Debited' and 'Credited' events in a financial system, an aggregator can aggregate these events to get a net balance for the user account.
 ### View Data
