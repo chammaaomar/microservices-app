@@ -35,3 +35,6 @@ Note the unidirectional flow of messages in the architecture:
 - Applications can read state from the View Data to present it to the user
 
 ## A Common Misinterpretation of The Microservice Architecture
+<img width="666" alt="mvc" src="https://user-images.githubusercontent.com/26146373/152269928-8bdbead3-f364-414b-bcdb-31f7da0fb7c4.png">
+<img width="671" alt="distributed_mvc" src="https://user-images.githubusercontent.com/26146373/152269980-0434cf89-d7d9-48b1-8263-a97b4d85937c.png">
+
