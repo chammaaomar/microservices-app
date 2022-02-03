@@ -4,6 +4,8 @@ This repo is an implementation of the project discussed in the Paragmatic Progra
 
 ## Microservice Architecture
 
+<img width="1217" alt="microservice_arch" src="https://user-images.githubusercontent.com/26146373/152267367-8fdf5205-dc5a-4011-a3e3-50492514daac.png">
+
 The various ingredients of this implementation of the microservice architecture are
 ### Applications
 Stateless handlers of user requests. These emit events and commands to the message store.
