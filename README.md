@@ -40,6 +40,13 @@ Note the unidirectional flow of messages in the architecture:
 - Aggregators use events from the message store to source state in the View Data
 - Applications can read state from the View Data to present it to the user
 
+An important feature of this microservice architecture is that all communication between applications and components,
+and components among themselves is done through explicit APIs and contracts. Each component declares the commands it handles
+and the events it writes. There is no implicit 'backdoor' communication by changing database rows. All communication is
+explicit and 'front door'. If your microservices communicate implicitly by reading rows modified by other microservices,
+you have tight coupling which hinders development velocity. You no longer can change a microservice without worrying about
+breaking other microservices! 
+
 ## A Common Misinterpretation of The Microservice Architecture
 A misinterpretation of a microservice architecture that I had was the following:
 Suppose in our Video Tutorials system we have Videos and Users MVC models with tables of the same names, like the following:
