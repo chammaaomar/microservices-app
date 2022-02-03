@@ -1,6 +1,11 @@
 # Video Tutorials
 
-This repo is an implementation of the project discussed in the Paragmatic Programmers book [Practical Microservices](https://pragprog.com/titles/egmicro/practical-microservices/). It's a barebones Video Tutorials app, but it's primarily meant as a demonstration of a microservices architecture. The `mvc` folder houses a barebones Model-View-Controller (MVC) implementation.
+This repo is an implementation of the project discussed in the Paragmatic Programmers book [Practical Microservices](https://pragprog.com/titles/egmicro/practical-microservices/). It's a barebones Video Tutorials app, but it's primarily meant as a demonstration of a microservices architecture. The `mvc` folder houses a barebones Model-View-Controller (MVC) implementation. The implementation uses:
+
+- Node.js as the language
+- Express to create the applications to handle user requests
+- PostgreSQL for the Message Store and the View Data
+- Docker Compose to spin up the PostgreSQL databases
 
 ## Microservice Architecture
 
