@@ -11,6 +11,8 @@ const createHomePageAggregator = require('./aggregators/home-page');
 const createUserCredentialsAggregator = require('./aggregators/user-credentials');
 
 const createIdentityComponent = require('./components/identity');
+const createSendEmailComponent = require('./components/send-email');
+const createPickupTransport = require('nodemailer-pickup-transport');
 
 /**
  * This function wires up all the pieces of our architecture:
@@ -45,6 +47,13 @@ function createConfig({ env }) {
 
 	const identityComponent = createIdentityComponent({ messageStore });
 
+	const transport = createPickupTransport({ directory: env.emailDirectory, })
+	const sendEmailComponent = createSendEmailComponent({
+		messageStore,
+		systemSenderEmailAddress: env.systemSenderEmailAddress,
+		transport,
+	})
+
 	// aggregators or projectors take the state transitions data from the message store (the audit trail)
 	// and project it into useful shapes for the View Data rendered to the user
 	// View Data in our case is also a postgres db
@@ -57,6 +66,7 @@ function createConfig({ env }) {
 	// out business functionality
 	const components = [
 		identityComponent,
+		sendEmailComponent,
 	]
 
 	return {

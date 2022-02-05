@@ -34,4 +34,6 @@ module.exports = {
 	port: parseInt(requireFromEnv('PORT'), 10),
 	version: packageJson.version,
 	cookieSecret: requireFromEnv('COOKIE_SECRET'),
+	emailDirectory: requireFromEnv('EMAIL_DIRECTORY'),
+	systemSenderEmailAddress: requireFromEnv('SYSTEM_SENDER_EMAIL_ADDRESS'),
 };
